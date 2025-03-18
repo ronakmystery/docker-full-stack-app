@@ -2,9 +2,17 @@ const express = require("express");
 const mysql = require("mysql2");
 const https = require("https");
 const fs = require("fs");
+const cors=require("cors")
 require("dotenv").config();
 
 const app = express();
+
+app.use(cors({
+  origin: "*", // Allow all origins
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allow all standard methods
+  allowedHeaders: ["Content-Type", "Authorization"], // Allow standard headers
+}));
+
 const PORT_HTTP = 5000;
 const PORT_HTTPS = 5001;
 

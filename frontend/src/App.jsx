@@ -6,10 +6,23 @@ import { io } from "socket.io-client";
 
 
 function App() {
+  
+
+    let getUsers = () => {
+
+    fetch("https://localhost:5001/api/users")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Data from node that got data from MariaDB:", data);
+
+      })
+      .catch((err) => console.error("Fetch Error:", err));
+  }
 
   return (
     <>
-      test
+            <button onClick={getUsers}>get users</button>
+
     </>
   )
 }
