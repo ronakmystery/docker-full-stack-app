@@ -1,28 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { io } from "socket.io-client";
 
+import Login from "./components/Login.jsx";
 
 function App() {
-  
 
-    let getUsers = () => {
+  let nodeURL = "https://localhost:5001"
 
-    fetch("https://localhost:5001/api/users")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Data from node that got data from MariaDB:", data);
+  const [user, setUser] = useState()
 
-      })
-      .catch((err) => console.error("Fetch Error:", err));
-  }
 
   return (
     <>
-            <button onClick={getUsers}>get users</button>
-
+    {user?.username}
+      <Login nodeURL={nodeURL} setUser={setUser}/>
     </>
   )
 }

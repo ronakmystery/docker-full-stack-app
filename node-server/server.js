@@ -3,7 +3,7 @@ const mysql = require("mysql2");
 const https = require("https");
 const fs = require("fs");
 const cors=require("cors")
-require("dotenv").config();
+const apiRoutes =require("./routes.js")
 
 const app = express();
 
@@ -13,8 +13,7 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"], // Allow standard headers
 }));
 
-const PORT_HTTP = 5000;
-const PORT_HTTPS = 5001;
+app.use(express.json());
 
 // Load SSL Certificates
 const options = {
@@ -39,24 +38,16 @@ app.get("/", (req, res) => {
     res.send("Node.js server is running!");
   });
 
-// API Route to Fetch Users
-app.get("/api/users", (req, res) => {
-  db.query("SELECT * FROM users", (err, results) => {
-    if (err) {
-      console.error("Error fetching users:", err);
-      res.status(500).json({ error: "Database error" });
-    } else {
-      res.json(results);
-    }
-  });
-});
+  // API Routes
+app.use("/api", apiRoutes);
+
 
 // Start HTTP Server
-app.listen(PORT_HTTP, '0.0.0.0',() => {
-  console.log(`HTTP Server running on http://localhost:${PORT_HTTP}`);
+app.listen(5000, '0.0.0.0',() => {
+  console.log(`HTTP Server running on http://localhost:${5000}`);
 });
 
 // Start HTTPS Server
-https.createServer(options, app).listen(PORT_HTTPS,'0.0.0.0', () => {
-  console.log(`HTTPS Server running on https://localhost:${PORT_HTTPS}`);
+https.createServer(options, app).listen(5001,'0.0.0.0', () => {
+  console.log(`HTTPS Server running on https://localhost:${5001}`);
 });
