@@ -1,15 +1,13 @@
-import { useEffect, useState, useRef } from 'react'
 import './App.css'
-import { io } from "socket.io-client";
 
 import Login from "./components/Login.jsx";
+
 
 function App() {
 
 
-  let nodeURL = "https://localhost:5001"
-
-
+  const currentHost = window.location.hostname; 
+  const nodeURL = `https://${currentHost}:5001`;
 
 
 
