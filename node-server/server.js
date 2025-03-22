@@ -2,8 +2,10 @@ const express = require("express");
 const mysql = require("mysql2");
 const https = require("https");
 const fs = require("fs");
-const cors=require("cors")
-const apiRoutes =require("./routes.js")
+const cors = require("cors")
+const apiRoutes = require("./routes.js")
+const websocket = require("./sockets.js")
+
 
 const app = express();
 
@@ -35,19 +37,21 @@ db.connect((err) => {
 });
 
 app.get("/", (req, res) => {
-    res.send("Node.js server is running!");
-  });
+  res.send("Node.js server is running!");
+});
 
-  // API Routes
+// API Routes
 app.use("/api", apiRoutes);
 
 
-// Start HTTP Server
-app.listen(5000, '0.0.0.0',() => {
-  console.log(`HTTP Server running on http://localhost:${5000}`);
-});
+// // Start HTTP Server
+// app.listen(5000, '0.0.0.0',() => {
+//   console.log(`HTTP Server running on http://localhost:${5000}`);
+// });
 
 // Start HTTPS Server
-https.createServer(options, app).listen(5001,'0.0.0.0', () => {
+const server = https.createServer(options, app)
+websocket(server);
+server.listen(5001, '0.0.0.0', () => {
   console.log(`HTTPS Server running on https://localhost:${5001}`);
 });

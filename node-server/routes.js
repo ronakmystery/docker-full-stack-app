@@ -38,7 +38,6 @@ const getTasks = async () => {
 
 // Get user by id
 router.post("/user", (req, res) => {
-    console.log(req.body)
     const { userId } = req.body;
 
     if (!userId) {
