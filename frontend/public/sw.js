@@ -13,7 +13,30 @@ self.addEventListener("push", (event) => {
             body: data.body,
             icon: "/192.png",
             tag: data.tag || "update-notification",
-            renotify: true
+            renotify: true,
         })
     );
 });
+
+
+self.addEventListener('notificationclick', function (event) {
+    event.notification.close(); 
+  
+    const targetUrl = 'https://192.168.1.129/'; 
+  
+    event.waitUntil(
+      clients.matchAll({ type: 'window', includeUncontrolled: true }).then(windowClients => {
+        // Check if app is already open
+        for (let client of windowClients) {
+          if (client.url === targetUrl && 'focus' in client) {
+            return client.focus();
+          }
+        }
+        // Else, open new tab
+        if (clients.openWindow) {
+          return clients.openWindow(targetUrl);
+        }
+      })
+    );
+  });
+  

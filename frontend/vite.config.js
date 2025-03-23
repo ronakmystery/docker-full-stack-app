@@ -15,8 +15,8 @@ export default defineConfig({
       "Access-Control-Allow-Origin": "*", //  Ensures CORS works across all origins
     },
     https: {
-      key: fs.readFileSync('./mkcerts/key.pem'),
-      cert: fs.readFileSync('./mkcerts/cert.pem')
+      key: fs.readFileSync('./cloudflare/mkcerts/key.pem'),
+      cert: fs.readFileSync('./cloudflare/mkcerts/cert.pem')
 
     },
     host: '0.0.0.0',  // Listen on all network interfaces

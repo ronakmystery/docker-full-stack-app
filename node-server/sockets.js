@@ -1,7 +1,6 @@
 const { Server } = require("socket.io")
+const globalState=require("./data")
 
-
-let connectedUsers = {};
 
 const websocket = (server) => {
     const io = new Server(server, {
@@ -17,14 +16,14 @@ const websocket = (server) => {
 
         socket.on('user', (user) => {
             if (user?.email) {
-                connectedUsers[user.email] = user;
-                console.log("Connected Users: ", connectedUsers)
+                globalState.connectedUsers.set(user.email, socket); 
+                console.log("Connected Users: ", globalState.connectedUsers)
             }
 
             socket.on("disconnect", () => {
-                delete connectedUsers[user?.email]
-                io.emit("User count:", Object.keys(connectedUsers).length);
-                console.log("Connected Users: ", connectedUsers)
+                globalState.connectedUsers.delete(user?.email);
+                io.emit("User count:", Object.keys(globalState.connectedUsers).length);
+                console.log("Connected Users: ", globalState.connectedUsers)
 
             })
         });
