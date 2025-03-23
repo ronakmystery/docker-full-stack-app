@@ -4,8 +4,10 @@ const globalState=require("./data")
 
 const websocket = (server) => {
     const io = new Server(server, {
+        path: '/api/socket.io',
         cors: {
             origin: "*", // Allow requests from React app
+            methods: ['GET', 'POST']
         }
     });
 

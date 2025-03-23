@@ -7,7 +7,7 @@ function App() {
 
 
   const currentHost = window.location.hostname; 
-  const nodeURL = `https://${currentHost}:5001`;
+  const nodeURL = `${window.location.origin}`;
 
 
 

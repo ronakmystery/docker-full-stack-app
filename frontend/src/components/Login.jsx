@@ -96,16 +96,24 @@ function Login({ nodeURL }) {
     };
 
     const socketRef = useRef(null);
+
     let initSocket = (user) => {
-        socketRef.current = io(nodeURL);
-
-        socketRef.current.on('hello', (data) => {
-            console.log('Received:', data);
-        });
-        console.log("socket user")
-        socketRef.current.emit("user", user);
-
-    }
+      socketRef.current = io('/', {
+        path: '/api/socket.io',   
+        transports: ['websocket'], 
+        secure: true         
+      });
+    
+      socketRef.current.on('connect', () => {
+        console.log("Connected to socket");
+        socketRef.current.emit("user", user); 
+      });
+    
+      socketRef.current.on('hello', (data) => {
+        console.log('Received from server:', data);
+      });
+    };
+    
 
     return (
         <div>

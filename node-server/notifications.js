@@ -31,6 +31,7 @@ async function sendPushNotification(data) {
         body: data.message,
     });
 
+    console.log(globalState)
 
     for (const [email, sub] of globalState.subscriptions) {
         const isConnected = globalState.connectedUsers.has(email);
@@ -46,10 +47,16 @@ async function sendPushNotification(data) {
 
 }
 
-
 router.post("/send-notification", async (req, res) => {
-    const result = await sendPushNotification(req.body);
+    try {
+        await sendPushNotification(req.body);
+        res.status(200).json({ success: true });
+    } catch (err) {
+        console.error('Failed to send push:', err);
+        res.status(500).json({ error: 'Failed to send push notification' });
+    }
 });
+
 
 
 let n=0;

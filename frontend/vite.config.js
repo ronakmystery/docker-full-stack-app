@@ -1,7 +1,5 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import fs from 'fs';
-
 
 export default defineConfig({
   plugins: [react()],
@@ -14,13 +12,15 @@ export default defineConfig({
     headers: {
       "Access-Control-Allow-Origin": "*", //  Ensures CORS works across all origins
     },
-    https: {
-      key: fs.readFileSync('./mkcerts/key.pem'),
-      cert: fs.readFileSync('./mkcerts/cert.pem')
-
-    },
-    host: '0.0.0.0',  // Listen on all network interfaces
+    host: '0.0.0.0',
     port: 5173,
     strictPort: true,
-  },
+    hmr: {
+      protocol: 'wss',
+      host: 'localhost',
+      port: 443,
+      path: '/hmr/ws' // matches nginx location
+    }
+  }
+  
 });

@@ -17,7 +17,7 @@ export function Notifications({ nodeURL ,user}) {
 
                 let data={user,subscription}
                 // Send subscription data to the backend
-                await fetch(`${nodeURL}/notify/subscribe`, {
+                await fetch(`${nodeURL}/api/notify/subscribe`, {
                     method: "POST",
                     body: JSON.stringify(data),
                     headers: {
@@ -38,7 +38,7 @@ export function Notifications({ nodeURL ,user}) {
             console.log("Sending notification...");
 
             let message = prompt("?")
-            await fetch(`${nodeURL}/notify/send-notification`,
+            await fetch(`${nodeURL}/api/notify/send-notification`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
