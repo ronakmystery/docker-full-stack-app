@@ -5,7 +5,7 @@ const fs = require("fs");
 const cors = require("cors")
 const apiRoutes = require("./routes.js")
 const websocket = require("./sockets.js")
-
+const notificationRoute=require("./notifications")
 
 const app = express();
 
@@ -19,8 +19,8 @@ app.use(express.json());
 
 // Load SSL Certificates
 const options = {
-  key: fs.readFileSync("./certs/server.key"),
-  cert: fs.readFileSync("./certs/server.cert"),
+  key: fs.readFileSync('./mkcerts/key.pem'),
+  cert: fs.readFileSync('./mkcerts/cert.pem')
 };
 
 
@@ -42,6 +42,7 @@ app.get("/", (req, res) => {
 
 // API Routes
 app.use("/api", apiRoutes);
+app.use("/notify",notificationRoute)
 
 
 // // Start HTTP Server

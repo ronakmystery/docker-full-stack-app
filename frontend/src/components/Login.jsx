@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { io } from "socket.io-client";
 
+import { Notifications } from "./Notifications.jsx";
+
 
 let getUser = async (nodeURL, userid) => {
     try {
@@ -39,12 +41,16 @@ let login = async (nodeURL, formData) => {
 
 function Login({ nodeURL }) {
 
+
+
     const [user, setUser] = useState()
+    const { sendNotification, requestNotificationPermission } = Notifications({ nodeURL,user });
+
 
     const [formData, setFormData] = useState({
         email: "x@x.com",
         password: "x",
-        username: "roro"
+        username: "x"
     });
 
 
@@ -109,6 +115,14 @@ function Login({ nodeURL }) {
             {
                 user ?
                     <>
+
+
+
+                        <button onClick={requestNotificationPermission}>get notifications</button>
+
+                        <button onClick={sendNotification}>Send Notification</button>
+
+
                         <button onClick={() => {
                             localStorage.removeItem("userid");
                             setUser(null)

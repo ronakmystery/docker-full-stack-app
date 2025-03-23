@@ -15,8 +15,9 @@ export default defineConfig({
       "Access-Control-Allow-Origin": "*", //  Ensures CORS works across all origins
     },
     https: {
-      key: fs.readFileSync('./certs/server.key'),
-      cert: fs.readFileSync('./certs/server.cert')
+      key: fs.readFileSync('./mkcerts/key.pem'),
+      cert: fs.readFileSync('./mkcerts/cert.pem')
+
     },
     host: '0.0.0.0',  // Listen on all network interfaces
     port: 5173,

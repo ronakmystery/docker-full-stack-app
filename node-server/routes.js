@@ -73,10 +73,6 @@ router.post("/login", async (req, res) => {
         //Check if user exists
         const query = "SELECT id, password FROM users WHERE email = ?";
         db.query(query, [email], async (err, results) => {
-            if (err) {
-                console.log("Database Error:", err);
-                return res.status(500).json({ error: "Database error" });
-            }
 
             if (results.length > 0) {
                 const user = results[0];
@@ -87,7 +83,6 @@ router.post("/login", async (req, res) => {
                         return res.status(401).json({ error: "Incorrect password. Please try again." });
                     }
 
-                    // If password matches, return success response
                     return res.json({ message: "Welcome back!", userId: user.id });
 
                 } catch (error) {

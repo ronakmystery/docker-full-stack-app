@@ -11,7 +11,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - mariadb-data:/var/lib/mysql
+      - ./db-init:/docker-entrypoint-initdb.d
     networks: 
       - x_network
 
@@ -40,6 +40,7 @@ services:
     volumes:
       - ./node-server:/app
       - /app/node_modules/ 
+      - ./mkcerts:/app/mkcerts
     environment:
       NODE_ENV: development
       DB_HOST: mariadb
@@ -77,6 +78,7 @@ services:
     volumes:
       - ./frontend:/app 
       - /app/node_modules 
+      - ./mkcerts:/app/mkcerts
     command: ["npm", "run", "dev"]  
     depends_on:
       - node-server
@@ -90,3 +92,4 @@ networks:
 
 volumes:
   mariadb-data:
+  
