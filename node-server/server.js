@@ -17,7 +17,7 @@ app.use(express.json());
 
 // Connect to database
 const db = require("./database");
-function tryConnect(retries = 3, delay = 1000) {
+function tryConnect(retries = 3, delay = 3000) {
   setTimeout(() => {
     db.connect((err) => {
       if (err) {

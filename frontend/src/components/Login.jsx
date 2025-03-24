@@ -4,10 +4,10 @@ import { io } from "socket.io-client";
 import { Notifications } from "./Notifications.jsx";
 
 
-let getUser = async (nodeURL, userid) => {
+let getUser = async (userid) => {
     try {
 
-        let response = await fetch(`${nodeURL}/api/user`, {
+        let response = await fetch(`/api/user`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ "userId": userid }),
@@ -22,10 +22,10 @@ let getUser = async (nodeURL, userid) => {
     }
 }
 
-let login = async (nodeURL, formData) => {
+let login = async (formData) => {
 
     try {
-        let response = await fetch(`${nodeURL}/api/login`, {
+        let response = await fetch(`/api/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData),
@@ -39,12 +39,12 @@ let login = async (nodeURL, formData) => {
 }
 
 
-function Login({ nodeURL }) {
+function Login() {
 
 
 
     const [user, setUser] = useState()
-    const { sendNotification, requestNotificationPermission } = Notifications({ nodeURL,user });
+    const { sendNotification, requestNotificationPermission } = Notifications({user });
 
 
     const [formData, setFormData] = useState({
@@ -63,7 +63,7 @@ function Login({ nodeURL }) {
         if (userid) {
             try {
                 const parsedId = JSON.parse(userid);
-                getUser(nodeURL, parsedId).then(data => {
+                getUser(parsedId).then(data => {
                     console.log(data)
                     setUser(data)
                     initSocket(data)
@@ -82,10 +82,10 @@ function Login({ nodeURL }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        login(nodeURL, formData).then(data => {
+        login(formData).then(data => {
             console.log(data)
             localStorage.setItem("userid", JSON.stringify(data.userId));
-            getUser(nodeURL, data.userId).then(data => {
+            getUser(data.userId).then(data => {
                 console.log(data)
                 setUser(data)
                 initSocket(data)

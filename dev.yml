@@ -40,7 +40,6 @@ services:
     volumes:
       - ./node-server:/app
       - /app/node_modules/ 
-      - ./mkcerts:/app/mkcerts
     environment:
       NODE_ENV: development
       DB_HOST: mariadb
@@ -78,7 +77,6 @@ services:
     volumes:
       - ./frontend:/app 
       - /app/node_modules 
-      - ./mkcerts:/app/mkcerts
     command: ["npm", "run", "dev"]  
     depends_on:
       - node-server
@@ -92,7 +90,7 @@ services:
       - "443:443"
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - ./mkcerts:/etc/nginx/ssl
+      - ./certs/mkcerts:/etc/nginx/ssl
     depends_on:
       - frontend
       - node-server
