@@ -44,11 +44,12 @@ function Login() {
 
 
     const [user, setUser] = useState()
-    const { sendNotification, requestNotificationPermission } = Notifications({user });
+    const { sendNotification, requestNotificationPermission } = Notifications({ user });
+
 
 
     const [formData, setFormData] = useState({
-        email: "x@x.com",
+        email: "x@x",
         password: "x",
         username: "x"
     });
@@ -98,25 +99,39 @@ function Login() {
     const socketRef = useRef(null);
 
     let initSocket = (user) => {
-      socketRef.current = io('/', {
-        path: '/api/socket.io',   
-        transports: ['websocket'], 
-        secure: true         
-      });
-    
-      socketRef.current.on('connect', () => {
-        console.log("Connected to socket");
-        socketRef.current.emit("user", user); 
-      });
-    
-      socketRef.current.on('hello', (data) => {
-        console.log('Received from server:', data);
-      });
+        socketRef.current = io('/', {
+            path: '/api/socket.io',
+            transports: ['websocket'],
+            secure: true
+        });
+
+        socketRef.current.on('connect', () => {
+            console.log("Connected to socket");
+            socketRef.current.emit("user", user);
+        });
+
+        socketRef.current.on('hello', (data) => {
+            console.log('Received from server:', data);
+        });
+
+        socketRef.current.on('messages', (data) => {
+            console.log('Received from server:', data);
+            setMessages([...data]);
+
+        });
+
+
     };
-    
+
+    const [messages, setMessages] = useState([])
+
 
     return (
         <div>
+            {
+                messages.map(m => <button key={m?.message}>{m?.message}</button>)
+            }
+
             {user?.username}
 
 
@@ -128,7 +143,19 @@ function Login() {
 
                         <button onClick={requestNotificationPermission}>get notifications</button>
 
-                        <button onClick={sendNotification}>Send Notification</button>
+                        <button onClick={() => {
+
+                            let message = prompt("message:")
+                            if (message) {
+
+                                socketRef.current.emit('sentMessage', { from: user?.username, message });
+
+                                sendNotification()
+
+                            }
+
+
+                        }}>send message</button>
 
 
                         <button onClick={() => {

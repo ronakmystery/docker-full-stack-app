@@ -17,25 +17,8 @@ app.use(express.json());
 
 // Connect to database
 const db = require("./database");
-function tryConnect(retries = 3, delay = 3000) {
-  setTimeout(() => {
-    db.connect((err) => {
-      if (err) {
-        console.error("Database connection failed:", err.message);
-        if (retries > 0) {
-          console.log(`🔁 Retrying in ${delay / 1000}s... (${retries} attempts left)`);
-          tryConnect(retries - 1, delay);
-        } else {
-          console.error("Max retries reached. Exiting.");
-          process.exit(1);
-        }
-      } else {
-        console.log("Connected to MariaDB");
-      }
-    });
-  }, delay);
-}
-tryConnect();
+
+db.connect()
 
 //default route
 app.get("/", (req, res) => {

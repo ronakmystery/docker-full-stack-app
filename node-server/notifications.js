@@ -18,7 +18,6 @@ router.post("/subscribe", (req, res) => {
     let subscription = data.subscription
     globalState.subscriptions.set(data.user.email, subscription);
 
-
     console.log(globalState.subscriptions)
 
     res.status(201).json({ message: "Subscribed successfully!" });
@@ -31,11 +30,9 @@ async function sendPushNotification(data) {
         body: data.message,
     });
 
-    console.log(globalState)
-
     for (const [email, sub] of globalState.subscriptions) {
         const isConnected = globalState.connectedUsers.has(email);
-        if (isConnected) {
+        if (isConnected && email!=data.user.email) {
             try {
                 await webPush.sendNotification(sub, payload);
             } catch (err) {
@@ -59,11 +56,11 @@ router.post("/send-notification", async (req, res) => {
 
 
 
-let n=0;
-setInterval(async () => {
-    console.log("Auto-triggering push notifications...");
-    n++
-    await sendPushNotification({ "message": n });
-}, 1000);
+// let n=0;
+// setInterval(async () => {
+//     console.log("Auto-triggering push notifications...");
+//     n++
+//     await sendPushNotification({ "message": n });
+// }, 1000);
 
 module.exports = router;  // Correctly exporting the Express router

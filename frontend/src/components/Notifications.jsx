@@ -37,7 +37,7 @@ export function Notifications({ user}) {
         try {
             console.log("Sending notification...");
 
-            let message = prompt("?")
+            let message = "message"
             await fetch(`/api/notify/send-notification`,
                 {
                     method: "POST",
