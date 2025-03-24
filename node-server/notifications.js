@@ -17,6 +17,7 @@ router.post("/subscribe", (req, res) => {
     const data = req.body;
     let subscription = data.subscription
     globalState.subscriptions.set(data.user.email, subscription);
+    //save subs when node restart
 
     console.log(globalState.subscriptions)
 

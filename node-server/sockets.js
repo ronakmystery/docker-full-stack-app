@@ -15,8 +15,9 @@ const websocket = (server) => {
     io.on("connection", (socket) => {
         socket.emit("hello", { message: "connected to node server" });
 
-
+        //socket sends to one client
         socket.on('user', (user) => {
+    
             if (user?.email) {
                 globalState.connectedUsers.add(user.email);
                 console.log("Connected Users: ", globalState.connectedUsers)
@@ -34,6 +35,7 @@ const websocket = (server) => {
 
         socket.on("sentMessage", (msg) =>  {
             globalState.messages.push(msg);
+            //io send to all clients
             io.emit("messages", globalState.messages);
         });
 

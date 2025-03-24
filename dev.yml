@@ -90,6 +90,7 @@ networks:
 
 volumes:
   mariadb-data:
+    driver: local
   
 
 

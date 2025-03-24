@@ -15,13 +15,9 @@ app.use(cors({
 
 app.use(express.json());
 
-// Connect to database
-const db = require("./database");
-
-db.connect()
 
 //default route
-app.get("/", (req, res) => {
+app.get("/api/about", (req, res) => {
   res.send("Node.js server is running!");
 });
 

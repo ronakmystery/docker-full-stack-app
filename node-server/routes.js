@@ -1,7 +1,5 @@
 const express = require("express");
 const mysql = require("mysql2");
-const os = require("os");
-const fs = require("fs");
 const bcrypt = require("bcryptjs");
 
 
@@ -22,18 +20,18 @@ db.connect((err) => {
 });
 
 
-let flaskURL="http://flask-server:5002/"
+// let flaskURL="http://flask-server:5002/"
 
-const getTasks = async () => {
-    try {
-      let response = await fetch(flaskURL);
-      let data = await response.json();
-      console.log("checking flask server ",data)
-    } catch (error) {
-      console.error("Failed to get data:", error);
-    }
-  };
-  getTasks()
+// const getTasks = async () => {
+//     try {
+//       let response = await fetch(flaskURL);
+//       let data = await response.json();
+//       console.log("checking flask server ",data)
+//     } catch (error) {
+//       console.error("Failed to get data:", error);
+//     }
+//   };
+//   getTasks()
 
 
 // Get user by id
