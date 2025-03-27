@@ -22,7 +22,7 @@ self.addEventListener("push", (event) => {
 self.addEventListener('notificationclick', function (event) {
     event.notification.close(); 
   
-    const targetUrl = 'https://192.168.1.129/'; 
+    const targetUrl = '/'; 
   
     event.waitUntil(
       clients.matchAll({ type: 'window', includeUncontrolled: true }).then(windowClients => {

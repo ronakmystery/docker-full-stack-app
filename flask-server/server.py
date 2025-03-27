@@ -1,12 +1,34 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify,request
+from classify import classify
+from ultralytics import YOLO
+import cv2
+from PIL import Image
+from flask_cors import CORS
+import numpy as np
+from werkzeug.middleware.proxy_fix import ProxyFix
+
+
 
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+
+CORS(app)
 
 
-@app.route('/')
+model = YOLO("yolov8n.pt")   
+
+
+@app.route('/about')
 def home():
-    return jsonify({"message": "flask server is running!"})
+    return jsonify({"message": "python server is running!"})
 
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5002,debug=True)
+@app.route('/video', methods=['POST'])
+def classify_frame():
+    image = Image.open(request.files['frame']).convert('RGB')
+    cv_image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+    cv2.imwrite("x.jpg", cv_image)
+    result = classify(model,cv_image)
+    print(result)
+    
+    return 'OK'

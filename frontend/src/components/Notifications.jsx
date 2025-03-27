@@ -1,7 +1,7 @@
 
 const PUBLIC_VAPID_KEY = "BHMoOD-_Jr8g-p0-BYTAF1W2lO96LQNpsYnfapLGg3f13QLmvx-Q9jAF-_Vy2SU73GZVr1OgP14ODbeuigltCGE";
 
-export function Notifications({ user}) {
+export function Notifications(user) {
     async function registerPush() {
         if ("serviceWorker" in navigator) {
             try {
@@ -33,11 +33,10 @@ export function Notifications({ user}) {
     }
 
 
-    const sendNotification = async () => {
+    const sendNotification = async (message) => {
         try {
             console.log("Sending notification...");
 
-            let message = "message"
             await fetch(`/api/notify/send-notification`,
                 {
                     method: "POST",

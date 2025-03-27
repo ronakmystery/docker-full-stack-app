@@ -21,6 +21,7 @@ app.get("/api/about", (req, res) => {
   res.send("Node.js server is running!");
 });
 
+
 // API Routes
 app.use("/api", apiRoutes);
 app.use("/api/notify", notificationRoute);

@@ -27,6 +27,8 @@ services:
 
   node-server:
     build: ./node-server
+    depends_on:
+      - mariadb
     container_name: node-server
     restart: always
     expose:
@@ -47,6 +49,8 @@ services:
     build: ./flask-server
     container_name: flask-server
     restart: always
+    expose:
+      - "8000"
     volumes:
       - ./flask-server:/app
     environment:

@@ -1,1 +1,11 @@
-Flask
+flask
+opencv-python
+matplotlib
+ultralytics
+numpy
+torch
+torchvision
+Pillow
+flask_cors
+gunicorn
+gevent

@@ -26,8 +26,9 @@ router.post("/subscribe", (req, res) => {
 
 
 async function sendPushNotification(data) {
+    // console.log(data)
     const payload = JSON.stringify({
-        title: "New Task!",
+        title: data.user.username,
         body: data.message,
     });
 
