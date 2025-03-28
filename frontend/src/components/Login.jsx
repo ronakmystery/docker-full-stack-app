@@ -113,7 +113,7 @@ function Login() {
         <>
           {user?.username}
 
-          {/* <Messaging socket={socket} user={user}/> */}
+          <Messaging socket={socket} user={user}/>
 
           <Tasks socket={socket} user={user}/>
 
