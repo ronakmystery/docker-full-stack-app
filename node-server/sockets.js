@@ -1,6 +1,8 @@
 const { Server } = require("socket.io");
 const globalState = require("./data");
 
+console.log(globalState)
+
 const websocket = (server) => {
   const io = new Server(server, {
     path: "/api/socket.io",

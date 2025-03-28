@@ -1,34 +1,10 @@
 const express = require("express");
-const mysql = require("mysql2");
 const bcrypt = require("bcryptjs");
 
 const router = express.Router();
 
-let db = mysql.createConnection({
-  host: "mariadb",
-  user: "root",
-  password: "rootpassword",
-  database: "mydb",
-});
+const db = require("./database.js");
 
-const connectWithRetry = () => {
-  db = mysql.createConnection({
-    host: "mariadb",
-    user: "root",
-    password: "rootpassword",
-    database: "mydb",
-  });
-
-  db.connect((err) => {
-    if (err) {
-      console.error("DB connection failed, retrying in 3s...", err.message);
-      setTimeout(connectWithRetry, 3000);
-    } else {
-      console.log("Connected to DB");
-    }
-  });
-};
-connectWithRetry();
 
 // Get user by id
 router.post("/user", (req, res) => {
