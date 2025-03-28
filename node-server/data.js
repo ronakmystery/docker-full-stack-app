@@ -2,7 +2,12 @@
 let globalState = {
     subscriptions: new Map(), 
     connectedUsers: new Set(),    
-    messages:[]
+    messages:[],
+    tasks: [
+      { id: 1, userId: null, task_name: "Task 1", },
+      { id: 2, userId: null, task_name: "Task 2", },
+      
+  ]
   };
   
   module.exports=globalState

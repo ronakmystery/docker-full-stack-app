@@ -9,15 +9,15 @@ function Messaging({ user, socket }) {
   const [messages, setMessages] = useState([]);
 
   socket.current?.on("messages", (data) => {
-    console.log("Received from server:", data);
+    console.log("Received messages from server:", data);
     setMessages([...data]);
   });
 
   return (
     <div id="messages">
       Messages
-      {messages.map((m) => (
-        <div>
+      {messages.map((m,index) => (
+        <div key={index}>
           {m?.from} : {m?.message}
         </div>
       ))}

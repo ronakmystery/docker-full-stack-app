@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { io } from "socket.io-client";
 
 import Messaging from "./Messaging.jsx";
+import Tasks from "./Tasks.jsx"
 
 let getUser = async (userid) => {
   try {
@@ -112,7 +113,10 @@ function Login() {
         <>
           {user?.username}
 
-          <Messaging socket={socket} user={user}/>
+          {/* <Messaging socket={socket} user={user}/> */}
+
+          <Tasks socket={socket} user={user}/>
+
 
 
           <button

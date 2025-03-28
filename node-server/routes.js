@@ -39,7 +39,7 @@ router.post("/user", (req, res) => {
   }
 
   db.query(
-    "SELECT username,email FROM users WHERE ID = ?",
+    "SELECT id,username,email FROM users WHERE ID = ?",
     [userId],
     (err, results) => {
       if (err) {
